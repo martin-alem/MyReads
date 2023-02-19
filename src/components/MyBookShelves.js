@@ -1,12 +1,14 @@
 import EmptyState from "./EmptyState";
 import Shelf from "./Shelf";
+import { useOutletContext } from "react-router-dom";
 
 const shelves = [
   { displayName: "Read", value: "read" },
   { displayName: "Want to read", value: "wantToRead" },
   { displayName: "Currently reading", value: "currentlyReading" },
 ];
-function MyBookShelf({ books }) {
+function MyBookShelves() {
+  const { books } = useOutletContext();
   return (
     <>
       {shelves.length ? (
@@ -20,4 +22,4 @@ function MyBookShelf({ books }) {
   );
 }
 
-export default MyBookShelf;
+export default MyBookShelves;

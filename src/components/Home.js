@@ -1,14 +1,13 @@
 import { useState, useEffect } from "react";
 import { getAll } from "./../utils/BookAPI";
-import BookShelves from "./BookShelves";
-import MyBookShelf from "./MyBookShelf";
+import { Outlet } from "react-router-dom";
+
 function Home() {
   const [books, setBooks] = useState([]);
 
   const getBooks = async () => {
     const response = await getAll();
     setBooks(response);
-    console.log(response);
   };
 
   useEffect(() => {
@@ -27,8 +26,7 @@ function Home() {
         <main>
           <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
             <div className="px-4 py-6 sm:px-0">
-              {/* <BookShelves books={books} /> */}
-              <MyBookShelf books={books} />
+              <Outlet context={{ books }} />
             </div>
           </div>
         </main>

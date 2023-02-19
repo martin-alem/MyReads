@@ -1,7 +1,10 @@
 import Book from "./Book";
 import EmptyState from "./EmptyState";
 import SearchInput from "./SearchInput";
-function BookShelves({ books }) {
+import { useOutletContext } from "react-router-dom";
+
+function BookShelves() {
+  const { books } = useOutletContext();
   return (
     <>
       <div className="mb-10">
