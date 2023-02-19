@@ -1,13 +1,25 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import debounce from "../utils/debounce";
 
 function SearchInput({ searchBookShelf }) {
   const [query, setQuery] = useState("");
 
-  const handleChange = (event) => {
+  const handleSearch = useCallback(
+    debounce((value) => {
+      searchBookShelf(value);
+    }, 500),
+    []
+  );
+
+  useEffect(() => {
+    handleSearch(query);
+  }, [query]);
+
+  const handleChangeInput = (event) => {
     setQuery(event.target.value);
-    searchBookShelf(event.target.value);
   };
   return (
     <div>
@@ -17,7 +29,7 @@ function SearchInput({ searchBookShelf }) {
       ></label>
       <div className="relative mt-1 flex items-center">
         <input
-          onChange={handleChange}
+          onChange={handleChangeInput}
           type="text"
           name="search"
           id="search"
