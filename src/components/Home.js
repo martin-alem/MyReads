@@ -6,28 +6,40 @@ function Home() {
   const [books, setBooks] = useState([]);
 
   const getBooks = async () => {
-    const response = await getAll();
-    setBooks(response);
+    try {
+      const response = await getAll();
+      setBooks(response);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const updateBookShelf = async (newShelf, book) => {
-    await update(book, newShelf);
-    const newBooks = books.map((b) => {
-      if (b.id === book.id) {
-        b.shelf = newShelf;
-      }
-      return b;
-    });
-    setBooks(newBooks);
+    try {
+      await update(book, newShelf);
+      const newBooks = books.map((b) => {
+        if (b.id === book.id) {
+          b.shelf = newShelf;
+        }
+        return b;
+      });
+      setBooks(newBooks);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const searchBookShelf = async (query, maxResults) => {
-    if (!query) {
-      setBooks(books);
-      return;
+    try {
+      if (!query) {
+        await getBooks();
+        return;
+      }
+      const response = await search(query, maxResults);
+      setBooks(response);
+    } catch (error) {
+      console.error(error);
     }
-    const response = await search(query, maxResults);
-    setBooks(response);
   };
 
   useEffect(() => {

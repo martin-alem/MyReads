@@ -5,9 +5,14 @@ import PropTypes from "prop-types";
 
 function Book({ book, updateBookShelf }) {
   const [shelf, setShelf] = useState(book.shelf);
+
   const getBook = async (bookId) => {
-    const response = await get(bookId);
-    setShelf(response.shelf);
+    try {
+      const response = await get(bookId);
+      setShelf(response.shelf);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
@@ -25,13 +30,17 @@ function Book({ book, updateBookShelf }) {
       <div className="flex flex-1 flex-col p-8">
         <img
           className="mx-auto h-32 w-32 flex-shrink-0"
-          src={book.imageLinks.thumbnail}
-          alt={book.title}
+          src={book?.imageLinks?.thumbnail || ""}
+          alt={book?.title || "Untitled"}
         />
-        <h3 className="mt-6 text-sm font-medium text-gray-900">{book.title}</h3>
+        <h3 className="mt-6 text-sm font-medium text-gray-900">
+          {book?.title || "Untitled"}
+        </h3>
         <dl className="mt-1 flex flex-grow flex-col justify-between">
           <dt className="sr-only">Title</dt>
-          <dd className="text-sm text-gray-500 capitalize">{book.publisher}</dd>
+          <dd className="text-sm text-gray-500 capitalize">
+            {book?.publisher || "Unpublished"}
+          </dd>
         </dl>
       </div>
     </li>

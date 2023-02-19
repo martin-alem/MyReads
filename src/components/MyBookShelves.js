@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
 import EmptyState from "./EmptyState";
 import Shelf from "./Shelf";
@@ -14,7 +15,7 @@ function MyBookShelves() {
 
   useEffect(() => {
     getBooks();
-  }, [getBooks]);
+  }, []);
   return (
     <>
       {shelves.length ? (
