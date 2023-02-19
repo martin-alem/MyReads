@@ -1,13 +1,26 @@
+import { useEffect, useState } from "react";
+import { get } from "../utils/BookAPI";
 import DropDown from "./DropDown";
+import PropTypes from "prop-types";
 
-function Book({ book }) {
+function Book({ book, updateBookShelf }) {
+  const [shelf, setShelf] = useState(book.shelf);
+  const getBook = async (bookId) => {
+    const response = await get(bookId);
+    setShelf(response.shelf);
+  };
+
+  useEffect(() => {
+    getBook(book.id);
+  }, [book.id]);
+
   return (
     <li
       key={book.id}
       className="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow"
     >
       <div className="w-full p-2 flex justify-end">
-        <DropDown shelf={book.shelf} />
+        <DropDown shelf={shelf} updateBookShelf={updateBookShelf} book={book} />
       </div>
       <div className="flex flex-1 flex-col p-8">
         <img
@@ -25,4 +38,8 @@ function Book({ book }) {
   );
 }
 
+Book.propTypes = {
+  book: PropTypes.object.isRequired,
+  updateBookShelf: PropTypes.func.isRequired,
+};
 export default Book;

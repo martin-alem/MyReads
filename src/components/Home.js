@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getAll } from "./../utils/BookAPI";
+import { getAll, update, search } from "./../utils/BookAPI";
 import { Outlet } from "react-router-dom";
 
 function Home() {
@@ -7,6 +7,26 @@ function Home() {
 
   const getBooks = async () => {
     const response = await getAll();
+    setBooks(response);
+  };
+
+  const updateBookShelf = async (newShelf, book) => {
+    await update(book, newShelf);
+    const newBooks = books.map((b) => {
+      if (b.id === book.id) {
+        b.shelf = newShelf;
+      }
+      return b;
+    });
+    setBooks(newBooks);
+  };
+
+  const searchBookShelf = async (query, maxResults) => {
+    if (!query) {
+      setBooks(books);
+      return;
+    }
+    const response = await search(query, maxResults);
     setBooks(response);
   };
 
@@ -25,8 +45,10 @@ function Home() {
         </header>
         <main>
           <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-            <div className="px-4 py-6 sm:px-0">
-              <Outlet context={{ books }} />
+            <div className="px-4 sm:px-0">
+              <Outlet
+                context={{ books, updateBookShelf, searchBookShelf, getBooks }}
+              />
             </div>
           </div>
         </main>

@@ -1,12 +1,13 @@
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
+import PropTypes from "prop-types";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-function DropDown({ shelf }) {
+function DropDown({ shelf, book, updateBookShelf }) {
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
@@ -30,6 +31,7 @@ function DropDown({ shelf }) {
             <Menu.Item>
               {() => (
                 <button
+                  onClick={() => updateBookShelf("wantToRead", book)}
                   className={classNames(
                     shelf === "wantToRead"
                       ? "bg-gray-600 text-white"
@@ -44,6 +46,7 @@ function DropDown({ shelf }) {
             <Menu.Item>
               {() => (
                 <button
+                  onClick={() => updateBookShelf("currentlyReading", book)}
                   className={classNames(
                     shelf === "currentlyReading"
                       ? "bg-gray-600 text-white w-full"
@@ -58,6 +61,7 @@ function DropDown({ shelf }) {
             <Menu.Item>
               {() => (
                 <button
+                  onClick={() => updateBookShelf("read", book)}
                   className={classNames(
                     shelf === "read"
                       ? "bg-gray-600 text-white w-full"
@@ -75,5 +79,11 @@ function DropDown({ shelf }) {
     </Menu>
   );
 }
+
+DropDown.protoTypes = {
+  shelf: PropTypes.object.isRequired,
+  book: PropTypes.object.isRequired,
+  updateBookShelf: PropTypes.func.isRequired,
+};
 
 export default DropDown;

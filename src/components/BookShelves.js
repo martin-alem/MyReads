@@ -1,19 +1,23 @@
 import Book from "./Book";
 import EmptyState from "./EmptyState";
 import SearchInput from "./SearchInput";
-import { useOutletContext } from "react-router-dom";
+import { useOutletContext, Link } from "react-router-dom";
+import { ArrowLeftIcon } from "@heroicons/react/20/solid";
 
 function BookShelves() {
-  const { books } = useOutletContext();
+  const { books, updateBookShelf, searchBookShelf } = useOutletContext();
   return (
     <>
+      <Link to="/">
+        <ArrowLeftIcon className="w-10 h-10" />
+      </Link>
       <div className="mb-10">
-        <SearchInput />
+        <SearchInput searchBookShelf={searchBookShelf} />
       </div>
       {books.length ? (
         <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {books.map((book) => (
-            <Book key={book.id} book={book} />
+            <Book key={book.id} book={book} updateBookShelf={updateBookShelf} />
           ))}
         </ul>
       ) : (

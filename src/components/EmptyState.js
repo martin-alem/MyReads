@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 function EmptyState({ action = false, message }) {
   return (
     <button
@@ -27,5 +29,10 @@ function EmptyState({ action = false, message }) {
     </button>
   );
 }
+
+EmptyState.propTypes = {
+  action: PropTypes.bool.isRequired,
+  message: PropTypes.string.isRequired,
+};
 
 export default EmptyState;
