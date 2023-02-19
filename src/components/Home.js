@@ -6,11 +6,12 @@ function Home() {
 
   const getBooks = async () => {
     const response = await getAll();
+    setBooks(response);
     console.log(response);
   };
 
   useEffect(() => {
-    // getBooks();
+    getBooks();
   }, []);
   return (
     <>
@@ -26,7 +27,7 @@ function Home() {
           <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
             {/* Replace with your content */}
             <div className="px-4 py-6 sm:px-0">
-              <BookShelves books={[]} />
+              <BookShelves books={books} />
             </div>
             {/* /End replace */}
           </div>
