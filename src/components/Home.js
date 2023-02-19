@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getAll, update, search } from "./../utils/BookAPI";
+import { getAll, update } from "./../utils/BookAPI";
 import { Outlet } from "react-router-dom";
 
 function Home() {
@@ -29,19 +29,6 @@ function Home() {
     }
   };
 
-  const searchBookShelf = async (query, maxResults) => {
-    try {
-      if (!query) {
-        await getBooks();
-        return;
-      }
-      const response = await search(query, maxResults);
-      setBooks(response);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   useEffect(() => {
     getBooks();
   }, []);
@@ -58,9 +45,7 @@ function Home() {
         <main>
           <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
             <div className="px-4 sm:px-0">
-              <Outlet
-                context={{ books, updateBookShelf, searchBookShelf, getBooks }}
-              />
+              <Outlet context={{ books, updateBookShelf, getBooks }} />
             </div>
           </div>
         </main>

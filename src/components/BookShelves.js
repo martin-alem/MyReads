@@ -3,9 +3,25 @@ import EmptyState from "./EmptyState";
 import SearchInput from "./SearchInput";
 import { useOutletContext, Link } from "react-router-dom";
 import { ArrowLeftIcon } from "@heroicons/react/20/solid";
+import { useState } from "react";
+import { search } from "../utils/BookAPI";
 
 function BookShelves() {
-  const { books, updateBookShelf, searchBookShelf } = useOutletContext();
+  const { updateBookShelf } = useOutletContext();
+  const [books, setBooks] = useState([]);
+
+  const searchBookShelf = async (query, maxResults) => {
+    try {
+      if (!query) {
+        setBooks([]);
+        return;
+      }
+      const response = await search(query, maxResults);
+      setBooks(response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <>
       <Link to="/">
