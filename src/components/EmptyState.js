@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-function EmptyState({ action = false, message }) {
+function EmptyState({ action = null, message }) {
   return (
     <button
       type="button"
@@ -31,7 +31,7 @@ function EmptyState({ action = false, message }) {
 }
 
 EmptyState.propTypes = {
-  action: PropTypes.bool.isRequired,
+  action: PropTypes.func,
   message: PropTypes.string.isRequired,
 };
 

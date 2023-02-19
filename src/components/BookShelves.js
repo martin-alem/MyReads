@@ -22,7 +22,7 @@ function BookShelves() {
         </ul>
       ) : (
         <div className="flex justify-center">
-          <EmptyState action={() => {}} message={"No books founds"} />
+          <EmptyState message={"No books founds"} />
         </div>
       )}
     </>
